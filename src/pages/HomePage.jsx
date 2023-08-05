@@ -8,14 +8,20 @@ import { Controls } from "../components/Controls";
 import {
   selectALLCountries,
   selectedCountriesInfo,
+  selectVisibleCounties,
 } from "../store/countries/counteries-selector";
+import { selectSearch } from "../store/controls/controls-selector";
 import { loadCountries } from "../store/countries/countries-action";
 
 export const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const countries = useSelector(selectALLCountries);
+  const search = useSelector(selectSearch);
+
+  const countries = useSelector((state) =>
+    selectVisibleCounties(state, { search })
+  );
   const { status, error, qty } = useSelector(selectedCountriesInfo);
 
   useEffect(() => {
